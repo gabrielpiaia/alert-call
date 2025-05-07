@@ -22,7 +22,7 @@
 ## Baixe o repositório 
 ```
 git clone https://github.com/gabrielpiaia/alert-call
-cd event-notifier
+cd alert-call
 ```
 
 ## Realize a configuração do .env
