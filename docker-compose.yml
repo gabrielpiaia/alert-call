@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  alerta-agent:
+    build:
+      context: ./alerta
+      dockerfile: Dockerfile
+    container_name: alerta-agent
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./whatsapp-session:/root/.wwebjs_auth
+    restart: always
+    network_mode: host
+    env_file:
+      - ./alerta/.env
+
+  asterisk:
+    build: ./asterisk
+    container_name: asterisk-container
+    restart: always
+    env_file:
+      - ./asterisk/.env
+    ports:
+      - "5060:5060/tcp"
+      - "5060:5060/udp"
+      - "5038:5038/tcp"
+      - "5038:5038/udp"
+      - "10000-10099:10000-10099/udp"
+    volumes:
+      - ./asterisk/rec:/var/spool/asterisk/monitor
+      - ./asterisk/config/sip.conf.template:/etc/asterisk/sip.conf.template
+#      - ./asterisk/config/sip.conf:/etc/asterisk/sip.conf
+      - ./asterisk/config/extensions.ael:/etc/asterisk/extensions.ael
+#      - ./asterisk/config/rtp.conf:/etc/asterisk/rtp.conf
+      - ./asterisk/config/rtp.conf.template:/etc/asterisk/rtp.conf.template
+      - ./asterisk/config/modules.conf:/etc/asterisk/modules.conf
+      - ./asterisk/config/manager.conf:/etc/asterisk/manager.conf
+      - ./asterisk/config/alerta.gsm:/var/lib/asterisk/sounds/alerta.gsm
+      - ./asterisk/config/confirmacao.gsm:/var/lib/asterisk/sounds/confirmacao.gsm
+    environment:
+      - ASTERISK_UID=1000
+      - ASTERISK_GID=1001
+    network_mode: host
+
