@@ -7,7 +7,7 @@
    - Código do chamado
    - Descrição do atendimento
 
-2. **Notificação WhatsApp **:  
+2. **Notificação WhatsApp**:  
    A aplicação envia uma mensagem para o plantonista no WhatsApp com as informações do chamado.
 
 3. **Ligação com Asterisk**:  
